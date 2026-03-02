@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API</title>
+    <style>
+        body{
+            background-image: url("https://wallpapers.com/images/hd/four-seasons-weather-pqyu7m4fhm7pu94o.jpg");
+            background-size: cover;   
+        }
+        #sid{
+           
+            opacity: 70%;
+            background-color: rgb(182, 211, 237);
+            width: 700px;
+            height: 200px;
+            border-radius: 10px;  
+        }
+        h1{
+            background-color: rgb(175, 243, 143); 
+        }
+        
+        input{
+            height: 30px;
+            text-align: center;
+        }
+        button{
+            width: 100px;
+            height: 30px;
+            background-color: greenyellow;
+        }
+        #res5{
+            font-size: 70px;
+           color: rgb(239, 239, 160);
+        }
+    </style>
+    <script>
+        function api(){
+            //In the api link unknown city name given means 404 not found shown otherwise 200 ok will be shown
+            var cname=document.getElementById("city").value 
+            var api = `https://api.openweathermap.org/data/2.5/weather?q=${cname}&appid=51842389ef8c6ec1e5c785205ce833cf`
+
+            // document.getElementById("res").innerHTML=api;
+        fetch(api)
+        .then((response)=>response.json())
+        .then((data)=>{
+            console.log(data)
+            document.getElementById("res1").innerHTML=data.weather[0].main
+            document.getElementById("res2").innerHTML=data.weather[0].description
+            document.getElementById("res3").innerHTML=data.wind.speed
+            document.getElementById("res4").innerHTML=data.main.temp
+        })
+        .catch((err)=>{
+            console.log(err.toString())
+            document.getElementById("sid").style.display="none"
+             document.getElementById("res5").innerHTML="City Not Found <br> Please Refresh This Page"
+        })
+    }
+    </script>
+</head>
+<body>
+    
+    <center><h1>Live Weather Report By City Name</h1>
+    <input type="text" id="city" placeholder="Enter Your City">
+    <br><br>
+   <button onclick="api()">Click Me</button>
+    <div id="res"></div>
+    <div id="sid">
+    <h2>Main Weather report : <span id="res1"></span></h2>
+    <h2>Description Weather report : <span id="res2"></span></h2>
+    <h2>Wind Speed report : <span id="res3"></span></h2>
+   <h2>Temperature report : <span id="res4"></span></h2> </div>
+</div>
+     <h3><div id="res5"></div></h3></center>
+
+</body>
+</html>
